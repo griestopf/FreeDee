@@ -44,7 +44,8 @@ jobs:
         # See: https://github.com/godotengine/godot-docs/issues/7084
       - name: Convert and Build
         run: |
-           curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js > ./godot_viewer/export/webcoi-serviceworker.js
+           wget https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js
+           mv coi-serviceworker.js ./godot_viewer/export/web
            sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' ./godot_viewer/export/webindex.html
 
       - name: Upload artifact
