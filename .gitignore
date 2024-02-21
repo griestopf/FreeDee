@@ -4,7 +4,7 @@
 # Godot-specific ignores
 .import/
 export.cfg
-godot_viewer/export/
+# godot_viewer/export/
 
 # Imported translations (automatically generated from CSV files)
 *.translation
