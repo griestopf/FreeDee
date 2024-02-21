@@ -46,7 +46,7 @@ jobs:
         run: |
            wget https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js
            mv coi-serviceworker.js ./godot_viewer/export/web
-           sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' ./godot_viewer/export/webindex.html
+           sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' ./godot_viewer/export/web/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
