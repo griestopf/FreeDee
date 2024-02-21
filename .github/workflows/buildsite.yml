@@ -37,13 +37,13 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Check Versions
         run: |
-          godot --version
-          blender --version
+          blender --background --python ./export_glb.py -- --input ./Model.blend --output ./godot_viewer/model/model.glb
+          godot ./godot_viewer/project.godot --export-release Web ./godot_viewer/Export/Web/index.html --headless
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload everything under  ./docs
-          path: './docs'
+          # Upload everything under  ./godot_viewer/export/web
+          path: './godot_viewer/export/web'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
