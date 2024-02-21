@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Build Web App from Model.blend
 
 on:
   # Runs on pushes targeting the default branch
@@ -35,10 +35,19 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Check Versions
+      - name: Convert and Build
         run: |
           blender --background --python ./export_glb.py -- --input ./Model.blend --output ./godot_viewer/model/model.glb
           godot ./godot_viewer/project.godot --export-release Web ./godot_viewer/Export/Web/index.html --headless
+
+        # Workaround for SharedArrayBuffer support on GitHub Pages
+        # See: https://github.com/godotengine/godot-docs/issues/7084
+      - name: Convert and Build
+        run: |
+           cd ./godot_viewer/Export/Web
+           curl -fsSL https://github.com/gzuidhof/coi-serviceworker/raw/master/coi-serviceworker.js > coi-serviceworker.js
+           sed -i 's#\(		<script src="index.js"></script>\)#		<script src="coi-serviceworker.js"></script>\n\1#g' index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
